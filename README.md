@@ -12,3 +12,7 @@
 - HTML5
 - CSS3 (custom properties, grid, flexbox, анимации)
 - JavaScript (тема, прогресс прокрутки, reveal-анимации)
+
+
+## Деплой
+[Netlify](https://shizee-portfolio.netlify.app)
