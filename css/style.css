@@ -63,6 +63,7 @@ body {
 
 a {
   color: var(--link);
+  text-decoration: none;
 }
 
 a:focus-visible,
@@ -93,6 +94,21 @@ h2 {
 
 section {
   padding: 56px 0;
+}
+
+/* Плавный вход страницы */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 50;
+  transition: opacity .6s ease, visibility .6s ease;
+}
+
+body.loaded::before {
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* ============================================
@@ -127,7 +143,6 @@ header.top .wrap {
 .logo {
   font-family: Unbounded, sans-serif;
   font-weight: 600;
-  text-decoration: none;
   color: var(--ink);
 }
 
@@ -139,7 +154,6 @@ nav {
 
 nav a {
   color: var(--ink);
-  text-decoration: none;
   font-weight: 500;
   background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat;
   transition: background-size .25s;
@@ -159,6 +173,11 @@ nav a:hover {
   display: grid;
   place-items: center;
   cursor: pointer;
+  transition: transform .2s;
+}
+
+.theme:active {
+  transform: scale(.92);
 }
 
 .theme svg {
@@ -173,80 +192,78 @@ nav a:hover {
    ПЕРВЫЙ ЭКРАН: BOX MODEL
    ============================================ */
 .hero {
-  padding: 24px 0 48px;
+  padding: 24px 0 64px;
 }
 
-/* fill-mode "backwards": после анимации clip-path снимается совсем */
 .bm {
   background: var(--margin);
   padding: var(--m);
-  border-radius: 6px;
+  border-radius: 8px;
   position: relative;
   max-width: 860px;
-  transition: padding .35s ease-out, background .3s;
-  animation: reveal-bm 1.1s cubic-bezier(.22, 1, .36, 1) backwards;
+  animation: reveal-bm 1.5s cubic-bezier(.25, .46, .45, .94) backwards;
 }
 
 .pad {
   background: var(--padding);
   padding: var(--p);
-  border-radius: 4px;
+  border-radius: 6px;
   position: relative;
-  transition: padding .35s ease-out, background .3s;
-  animation: reveal-pad 1.1s cubic-bezier(.22, 1, .36, 1) backwards;
-  animation-delay: .12s;
+  animation: reveal-pad 1.2s cubic-bezier(.22, 1, .36, 1) backwards;
+  animation-delay: .15s;
 }
 
 .con {
   background: var(--content);
-  padding: 36px 32px;
-  border-radius: 3px;
+  padding: 40px 32px;
+  border-radius: 4px;
   position: relative;
   color: var(--on-box);
-  transition: background .3s;
-  animation: reveal-con 1.1s cubic-bezier(.22, 1, .36, 1) backwards;
-  animation-delay: .24s;
+  animation: reveal-con 1.2s cubic-bezier(.22, 1, .36, 1) backwards;
+  animation-delay: .3s;
 }
 
-/* Мягкое раскрытие через clip-path — без скачков padding */
 @keyframes reveal-bm {
   from {
-    clip-path: inset(0 0 100% 0 round 6px);
-    opacity: .4;
+    clip-path: inset(0 0 100% 0 round 8px);
+    opacity: .45;
   }
   to {
-    clip-path: inset(0 0 0 0 round 6px);
+    clip-path: inset(0 0 0 0 round 8px);
     opacity: 1;
   }
 }
 
 @keyframes reveal-pad {
   from {
-    clip-path: inset(0 0 100% 0 round 4px);
-    opacity: .5;
+    clip-path: inset(0 0 100% 0 round 6px);
+    opacity: .45;
+    transform: translateY(12px);
   }
   to {
-    clip-path: inset(0 0 0 0 round 4px);
+    clip-path: inset(0 0 0 0 round 6px);
     opacity: 1;
+    transform: none;
   }
 }
 
 @keyframes reveal-con {
   from {
-    clip-path: inset(0 0 100% 0 round 3px);
-    opacity: .6;
+    clip-path: inset(0 0 100% 0 round 4px);
+    opacity: .55;
+    transform: translateY(12px);
   }
   to {
-    clip-path: inset(0 0 0 0 round 3px);
+    clip-path: inset(0 0 0 0 round 4px);
     opacity: 1;
+    transform: none;
   }
 }
 
-/* Подписи margin / padding / content */
 .tag {
   position: absolute;
-  top: 6px;
-  left: 12px;
+  top: 10px;
+  left: 14px;
   font-size: 12px;
   font-weight: 600;
   color: var(--on-box);
@@ -254,86 +271,69 @@ nav a:hover {
   animation: tag-fade .5s ease-out forwards;
 }
 
-.bm > .tag {
-  animation-delay: .35s;
-}
-
-.pad > .tag {
-  animation-delay: .5s;
-}
-
-.con .tag {
-  top: 10px;
-  animation-delay: .65s;
-}
+.bm > .tag { animation-delay: .5s; }
+.pad > .tag { animation-delay: .65s; }
+.con .tag { top: 14px; animation-delay: .8s; }
 
 @keyframes tag-fade {
-  to {
-    opacity: .75;
-  }
+  to { opacity: .85; }
 }
 
-/* Контент внутри content — плавное всплытие без рывков */
 .con h1,
 .con p,
 .con .cta {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(14px);
   animation: rise .8s cubic-bezier(.22, 1, .36, 1) both;
 }
 
 .con h1 {
   font-size: clamp(30px, 6vw, 56px);
-  margin-top: 12px;
-  animation-delay: .75s;
+  margin-top: 14px;
+  animation-delay: .9s;
 }
 
 .con p {
   max-width: 46ch;
-  margin: 20px 0 0;
+  margin: 22px 0 0;
   font-size: 19px;
-  animation-delay: .85s;
+  animation-delay: 1s;
 }
 
 .con .cta {
-  animation-delay: .95s;
+  margin-top: 30px;
+  animation-delay: 1.1s;
 }
 
 @keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
 }
 
-/* Метка с размерами content-box */
 .dim {
   position: absolute;
-  right: 10px;
-  bottom: 8px;
-  font-size: 12px;
+  right: 12px;
+  bottom: 10px;
+  font-size: 11px;
   font-weight: 600;
   background: var(--on-box);
   color: var(--content);
   padding: 2px 8px;
   border-radius: 3px;
   opacity: 0;
-  animation: tag-fade .5s 1.05s ease-out forwards;
+  animation: tag-fade .5s 1.25s ease-out forwards;
 }
 
 .cta {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 28px;
 }
 
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 12px 20px;
   border-radius: 6px;
   font-weight: 600;
@@ -345,12 +345,13 @@ nav a:hover {
   font-family: inherit;
   font-size: inherit;
   line-height: 1.3;
-  transition: transform .15s, box-shadow .15s;
+  transition: transform .15s, box-shadow .15s, border-color .2s;
 }
 
 .btn.main {
   background: var(--ink);
   color: var(--bg);
+  border-color: var(--ink);
 }
 
 .btn:hover {
@@ -374,9 +375,10 @@ nav a:hover {
 
 .track {
   display: flex;
-  gap: 40px;
+  gap: 48px;
   width: max-content;
-  animation: scroll 28s linear infinite;
+  will-change: transform;
+  animation: scroll 30s linear infinite;
   font-family: Unbounded, sans-serif;
   font-weight: 500;
   font-size: 18px;
@@ -388,9 +390,7 @@ nav a:hover {
 }
 
 @keyframes scroll {
-  to {
-    transform: translateX(-50%);
-  }
+  to { transform: translateX(-50%); }
 }
 
 /* ============================================
@@ -420,11 +420,6 @@ nav a:hover {
   gap: 16px;
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
-  transition: padding-left .2s;
-}
-
-.stack li:hover {
-  padding-left: 10px;
 }
 
 .stack span:last-child {
@@ -433,7 +428,7 @@ nav a:hover {
 }
 
 /* ============================================
-   РАБОТЫ
+   РАБОТЫ (главная)
    ============================================ */
 .works-sec {
   padding-top: 24px;
@@ -445,10 +440,10 @@ nav a:hover {
 
 .work {
   display: grid;
-  grid-template-columns: 200px 1fr auto;
+  grid-template-columns: 210px 1fr auto;
   gap: 28px;
   align-items: center;
-  padding: 28px 0;
+  padding: 30px 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -457,15 +452,10 @@ nav a:hover {
   border-radius: 8px;
   border: 1px solid var(--line);
   background: var(--surface);
-  padding: 12px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  transition: transform .3s cubic-bezier(.3, 1.4, .5, 1);
-}
-
-.work:hover .thumb {
-  transform: rotate(-2deg) scale(1.04);
+  gap: 8px;
 }
 
 .thumb i {
@@ -474,24 +464,10 @@ nav a:hover {
   background: var(--line);
 }
 
-.thumb i:nth-child(1) {
-  height: 14%;
-  background: var(--c, var(--content));
-}
-
-.thumb i:nth-child(2) {
-  height: 38%;
-}
-
-.thumb i:nth-child(3) {
-  height: 10%;
-  width: 60%;
-}
-
-.thumb i:nth-child(4) {
-  height: 10%;
-  width: 80%;
-}
+.thumb i:nth-child(1) { height: 14%; background: var(--c, var(--content)); }
+.thumb i:nth-child(2) { height: 38%; }
+.thumb i:nth-child(3) { height: 10%; width: 60%; }
+.thumb i:nth-child(4) { height: 10%; width: 80%; }
 
 .work h3 {
   font-size: 20px;
@@ -520,14 +496,14 @@ nav a:hover {
 .go {
   font-weight: 600;
   white-space: nowrap;
-  text-decoration: none;
   background: linear-gradient(currentColor, currentColor) 0 100% / 100% 2px no-repeat;
-  transition: background-size .25s;
+  transition: background-size .25s, color .2s;
 }
 
 .work:hover .go {
   background-size: 0 2px;
   background-position: 100% 100%;
+  color: var(--link);
 }
 
 /* ============================================
@@ -535,7 +511,7 @@ nav a:hover {
    ============================================ */
 .js .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(20px);
   transition: opacity .7s, transform .7s cubic-bezier(.2, .8, .2, 1);
 }
 
@@ -554,17 +530,9 @@ nav a:hover {
   transform: none;
 }
 
-.reveal.in .thumb i:nth-child(2) {
-  transition-delay: .15s;
-}
-
-.reveal.in .thumb i:nth-child(3) {
-  transition-delay: .3s;
-}
-
-.reveal.in .thumb i:nth-child(4) {
-  transition-delay: .45s;
-}
+.reveal.in .thumb i:nth-child(2) { transition-delay: .15s; }
+.reveal.in .thumb i:nth-child(3) { transition-delay: .3s; }
+.reveal.in .thumb i:nth-child(4) { transition-delay: .45s; }
 
 /* ============================================
    КОНТАКТЫ
@@ -606,7 +574,7 @@ footer {
   position: fixed;
   left: 50%;
   bottom: calc(24px + env(safe-area-inset-bottom, 0px));
-  transform: translate(-50%, 20px);
+  transform: translate(-50%, 24px);
   background: var(--ink);
   color: var(--bg);
   padding: 10px 18px;
@@ -615,11 +583,227 @@ footer {
   opacity: 0;
   pointer-events: none;
   transition: opacity .25s, transform .25s;
+  z-index: 60;
 }
 
 .toast.show {
   opacity: 1;
   transform: translate(-50%, 0);
+}
+
+/* ============================================
+   ЗАГОЛОВОК СЕКЦИИ РАБОТ (кнопка "все")
+   ============================================ */
+.works-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   СЕТКА РАБОТ (works.html)
+   ============================================ */
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.works-grid .work {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+
+.works-grid .work .thumb {
+  aspect-ratio: 3 / 2;
+  min-height: 190px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.works-grid .work .thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c, var(--content)) 22%, transparent), var(--surface));
+  opacity: 1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.works-grid .work .thumb i {
+  position: relative;
+  z-index: 1;
+  display: block;
+  border-radius: 3px;
+  background: var(--line);
+}
+
+.works-grid .work .thumb i:nth-child(1) {
+  height: 16%;
+  background: var(--c, var(--content));
+}
+
+.works-grid .work .thumb i:nth-child(2) {
+  height: 44%;
+}
+
+.works-grid .work .thumb i:nth-child(3) {
+  height: 12%;
+  width: 70%;
+}
+
+.works-grid .work .thumb i:nth-child(4) {
+  height: 12%;
+  width: 90%;
+}
+
+.works-grid .work:hover {
+  transform: translateY(-4px);
+  box-shadow: 6px 6px 0 var(--ink);
+  border-color: var(--ink);
+}
+
+.works-grid .work:hover .thumb {
+  transform: none;
+}
+
+.works-grid .work h3 {
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+
+.works-grid .work p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.works-grid .work .go {
+  margin-top: auto;
+}
+
+/* ============================================
+   СТРАНИЦА ОДНОГО ПРОЕКТА (work.html)
+   ============================================ */
+.work-page {
+  padding-top: 24px;
+}
+
+.work-back {
+  margin-bottom: 24px;
+}
+
+.work-detail {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.work-detail-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.work-detail h1 {
+  font-size: clamp(26px, 5vw, 40px);
+  margin: 0;
+}
+
+.work-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.work-detail-tags span {
+  padding: 2px 10px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.work-detail-desc {
+  font-size: 17px;
+  color: var(--muted);
+  margin: 0 0 24px;
+  max-width: 60ch;
+}
+
+.work-detail-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.work-gallery {
+  margin-bottom: 32px;
+}
+
+.work-gallery h3 {
+  font-size: 20px;
+  margin: 0 0 14px;
+}
+
+.gallery-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gallery-list img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  transition: transform .2s;
+}
+
+.gallery-list img:hover {
+  transform: scale(1.02);
+}
+
+.work-detail-full {
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+
+.work-detail-full h3 {
+  font-size: 20px;
+  margin: 0 0 12px;
+}
+
+.work-detail-full p {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.7;
+}
+
+.work-not-found {
+  text-align: center;
+  padding: 60px 20px;
 }
 
 /* ============================================
@@ -656,12 +840,28 @@ footer {
     --m: 16px;
     --p: 16px;
   }
+
+  .works-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .works-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .works-grid .work {
+    padding: 16px;
+  }
+
+  .gallery-list img {
+    height: 260px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
 
   *,
   *::before,
@@ -671,20 +871,14 @@ footer {
   }
 
   .tag,
-  .dim {
-    opacity: .75;
-  }
+  .dim { opacity: .75; }
 
   .con h1,
   .con p,
-  .con .cta {
-    opacity: 1;
-    transform: none;
-  }
+  .con .cta { opacity: 1; transform: none; }
 
   .js .reveal,
-  .js .reveal .thumb i {
-    opacity: 1;
-    transform: none;
-  }
+  .js .reveal .thumb i { opacity: 1; transform: none; }
+
+  body::before { display: none; }
 }

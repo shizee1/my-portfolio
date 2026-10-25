@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Все работы — Александр Петров</title>
+<meta name="description" content="Подборка работ по верстке сайтов: лендинги, интернет-магазины, промо-страницы.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>
+  /* тема ставится до отрисовки, чтобы не было мигания */
+  (function(){var t;try{t=localStorage.getItem('theme')}catch(e){}
+  if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  document.documentElement.dataset.theme=t;document.documentElement.classList.add('js')})();
+</script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html">Александр Петров</a>
+    <nav aria-label="Основное меню">
+      <a href="index.html">Обо мне</a>
+      <a href="works.html" aria-current="page">Все работы</a>
+      <a href="index.html#contact">Контакты</a>
+      <button class="theme" type="button" aria-label="Сменить тему">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="works-sec">
+    <div class="wrap">
+      <div class="works-header">
+        <h2>Все работы</h2>
+        <a href="index.html" class="btn">&larr; На главную</a>
+      </div>
+      <div class="works-grid" id="worksGrid">
+        <!-- работы отрисуются скриптом -->
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">© 2026 Александр Петров</div></footer>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="js/works-data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

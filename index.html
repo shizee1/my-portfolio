@@ -25,6 +25,7 @@
     <nav aria-label="Основное меню">
       <a href="#about">Обо мне</a>
       <a href="#works">Работы</a>
+      <a href="works.html">Все работы</a>
       <a href="#contact">Контакты</a>
       <button class="theme" type="button" aria-label="Сменить тему">
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg>
@@ -82,35 +83,12 @@
 
   <section id="works" class="works-sec">
     <div class="wrap">
-      <h2>Работы</h2>
-      <div class="works">
-        <article class="work reveal">
-          <div class="thumb" style="--c:#8FBCC8" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-          <div>
-            <h3>Лендинг TurbineServices</h3>
-            <p>Одностраничный сайт по макету из Figma</p>
-            <div class="tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
-          </div>
-          <a class="go" href="https://heartfelt-brioche-2d7026.netlify.app">Смотреть</a>
-        </article>
-        <article class="work reveal">
-          <div class="thumb" style="--c:#C9D68F" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-          <div>
-            <h3>NovaTech — лендинг IT-стартапа</h3>
-            <p>Промо-лендинг для вымышленного стартапа в сфере AI и облачных технологий.</p>
-            <div class="tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
-          </div>
-          <a class="go" href="https://novatech-landing.netlify.app">Смотреть</a>
-        </article>
-        <article class="work reveal">
-          <div class="thumb" style="--c:#F6C99B" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-          <div>
-            <h3>Интернет-магазин: MedicalTech Store</h3>
-            <p>Страница каталога медицинского оборудования и технических устройств со встроенным переключателем темного/светлого оформления.</p>
-            <div class="tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
-          </div>
-          <a class="go" href="https://medicaltech-store.netlify.app">Смотреть</a>
-        </article>
+      <div class="works-header">
+        <h2>Работы</h2>
+        <a href="works.html" class="btn">Смотреть все работы &rarr;</a>
+      </div>
+      <div class="works" id="worksList">
+        <!-- избранные работы отрисуются скриптом -->
       </div>
     </div>
   </section>
@@ -133,6 +111,7 @@
 
 <footer><div class="wrap">© 2026 Александр Петров</div></footer>
 <div class="toast" role="status" aria-live="polite"></div>
+<script src="js/works-data.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
